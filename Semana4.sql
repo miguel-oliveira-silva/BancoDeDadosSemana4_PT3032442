@@ -34,7 +34,15 @@ na relação takes para notas numéricas; por exemplo, uma nota “A+” poderia
 	curso multiplicado pelos pontos numéricos para a nota que o aluno recebeu.
 --Dada essa relação e o nosso esquema university, escreva: 
 --Ache os pontos totais recebidos por aluno, para todos os cursos realizados por ele.
-    	 select student.id, student.name, course.title, department.dept_name, course.credits, 
+    	 select student.id, student.name, course.title, department.dept_name, course.credits, student.tot_cred 
+	FROM 
+    student
+JOIN 
+    takes ON student.id = takes.id
+JOIN 
+    course ON takes.course_id = course.course_id
+JOIN 
+    department ON course.dept_name = department.dept_name;
 SELECT student.ID, SUM(course.credits * grade_points.points) AS total_points
 FROM student
 JOIN takes ON student.ID = takes.ID
