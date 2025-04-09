@@ -28,25 +28,36 @@ FROM instructor;
 	   	 ORDER BY 
    		 teaches.course_id Asc;
 --Questão 4. Suponha que você tenha recebido uma relação grade_points (grade, points), que oferece uma conversão de conceitos (letras)
-na relação takes para notas numéricas; por exemplo, uma nota “A+” poderia ser especificada para corresponder a 4 pontos, 
-	um “A” para 3,7 pontos, e “A-” para 3,4, e “B+” para 3,1 pontos, e assim por diante. 
+--na relação takes para notas numéricas; por exemplo, uma nota “A+” poderia ser especificada para corresponder a 4 pontos, 
+--um “A” para 3,7 pontos, e “A-” para 3,4, e “B+” para 3,1 pontos, e assim por diante. 
 --Os Pontos totais obtidos por um aluno para uma oferta de curso (section) são definidos como o número de créditos para o
-	curso multiplicado pelos pontos numéricos para a nota que o aluno recebeu.
+--curso multiplicado pelos pontos numéricos para a nota que o aluno recebeu.
 --Dada essa relação e o nosso esquema university, escreva: 
 --Ache os pontos totais recebidos por aluno, para todos os cursos realizados por ele.
-    	 select student.id, student.name, course.title, department.dept_name, course.credits, student.tot_cred 
-	FROM 
-    student
-JOIN 
-    takes ON student.id = takes.id
-JOIN 
-    course ON takes.course_id = course.course_id
-JOIN 
-    department ON course.dept_name = department.dept_name;
-SELECT student.ID, SUM(course.credits * grade_points.points) AS total_points
+    select student.id, student.name, course.title, department.dept_name, course.credits, grade_points.grade, grade_points.points, grade_points.points *  course.credits as Pontos_totais
 FROM student
-JOIN takes ON student.ID = takes.ID
-JOIN course ON takes.course_id = course.course_id
-JOIN grade_points ON takes.grade = grade_points.grade
-GROUP BY student.ID;
+inner JOIN 
+    takes ON student.id = takes.id
+inner JOIN 
+    course ON takes.course_id = course.course_id
+inner JOIN 
+    department ON course.dept_name = department.dept_name;
+inner JOIN 
+    grade_points ON takes.grade = grade_points.grade
+group by student.id, student.name, course.title, department.dept_name, course.credits, grade_points.grade, grade_points.points;
+--Questão 5. Crie uma view a partir do resultado da Questão 4 com o nome “coeficiente_rendimento”.
+
+CREATE VIEW coeficiente_rendimento AS
+ select student.id, student.name, course.title, department.dept_name, course.credits, grade_points.grade, grade_points.points, grade_points.points *  course.credits as Pontos_totais
+FROM student
+inner JOIN 
+    takes ON student.id = takes.id
+inner JOIN 
+    course ON takes.course_id = course.course_id
+inner JOIN 
+    department ON course.dept_name = department.dept_name;
+inner JOIN 
+    grade_points ON takes.grade = grade_points.grade
+group by student.id, student.name, course.title, department.dept_name, course.credits, grade_points.grade, grade_points.points;
+
 
