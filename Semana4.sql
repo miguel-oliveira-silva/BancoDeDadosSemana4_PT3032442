@@ -41,10 +41,9 @@ inner JOIN
 inner JOIN 
     course ON takes.course_id = course.course_id
 inner JOIN 
-    department ON course.dept_name = department.dept_name;
+    department ON course.dept_name = department.dept_name
 inner JOIN 
-    grade_points ON takes.grade = grade_points.grade
-group by student.id, student.name, course.title, department.dept_name, course.credits, grade_points.grade, grade_points.points;
+    grade_points ON takes.grade = grade_points.grade;
 --Questão 5. Crie uma view a partir do resultado da Questão 4 com o nome “coeficiente_rendimento”.
 
 CREATE VIEW coeficiente_rendimento AS
@@ -55,9 +54,8 @@ inner JOIN
 inner JOIN 
     course ON takes.course_id = course.course_id
 inner JOIN 
-    department ON course.dept_name = department.dept_name;
+    department ON course.dept_name = department.dept_name
 inner JOIN 
-    grade_points ON takes.grade = grade_points.grade
-group by student.id, student.name, course.title, department.dept_name, course.credits, grade_points.grade, grade_points.points;
+    grade_points ON takes.grade = grade_points.grade;
 
 
